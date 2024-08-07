@@ -21,6 +21,11 @@ class Choice(db.Model):
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
 
 
+@app.route("/")
+def start():
+    return redirect("polls")
+
+
 # /polls
 @app.route('/polls/')
 def polls():
