@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>{{ question.question_text }}</title>
+</head>
+<form action="{{ url_for('vote', question_id=question.id) }}" method="post">
+    <fieldset>
+        <legend><h1>{{question.question_text}}</h1></legend>
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <p><strong>選択できていません</strong></p>
+                {% endif %}
+            {% endwith %}
+            {% for choice in question.choices %}
+            <div>
+                <input type="radio" id="choice{{ choice.id }}" name="choice" value="{{ choice.id }}">
+                <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label>
+            </div>
+            {% endfor %}
+    </fieldset>
+    <button type="submit">投票</button>
+</form>
+</html>

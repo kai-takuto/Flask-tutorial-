@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+    <legend><h1>{{question.question_text}}</h1></legend>
+    <ul>
+        {% for choice in question.choices %}
+            <li>{{ choice.choice_text }} -- {{ choice.votes }} 投票</li>
+        {% endfor %}
+    </ul>
+</body>
+<a href="{{ url_for('detail', question_id=question.id) }}">再投票しますか？</a>
+</html>
