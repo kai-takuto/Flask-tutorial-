@@ -7,7 +7,7 @@
 </head>
 <body>
     <ul>
-        {% for question in questions %}
+        {% for question in question_text %}
             <li>
                 <a href="{{ url_for('detail', question_id=question.id) }}">{{ question.question_text }}</a>
             </li>

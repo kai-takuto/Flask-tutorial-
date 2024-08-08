@@ -1,24 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-import os
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///polls.db'
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', os.urandom(24).hex())
-db = SQLAlchemy(app)
-
-
-class Question(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    question_text = db.Column(db.String(200), nullable=False)
-    choices = db.relationship('Choice', backref='question', lazy=True)
-
-
-class Choice(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    choice_text = db.Column(db.String(200), nullable=False)
-    votes = db.Column(db.Integer, default=0)
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+from flask import render_template, request, redirect, url_for, flash
+from models import db, Question, Choice
+from init import app
 
 
 @app.route("/")
@@ -30,7 +12,7 @@ def start():
 @app.route('/polls/')
 def polls():
     questions = Question.query.all()
-    return render_template('index.html', questions=questions)
+    return render_template('index.html', question_text=questions)
 
 
 # /polls/1
